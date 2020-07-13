@@ -7,9 +7,9 @@ import TabsComponent from './components/Tabs/TabsComponent';
 function App() {
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
                 <TabsComponent />
-            <Footer />
+            {/* <Footer  */}
        </div>
     )
 }
