@@ -30,20 +30,17 @@ function TaskAdd(props) {
     const classes = useStyles();
     const [ title, setTitle ] = React.useState("");
     const [ content, setContent ] = React.useState("");
-    const [ timeLeft, setTimeLeft ] = React.useState();
+    const [ date, setDate ] = React.useState(new Date());
 
-    const convertTimeToSeconds = (timeLeft) => {
-      return Math.floor(new Date(timeLeft).getTime()/1000 )
-    }
 
     const onFormSubmit = (e) => {
       e.preventDefault();
-      // axios.post(serverUrl, {title: title, content: content})
-      // .then((response) => {
-      //   props.onAddTask(0);
-      // })
-      // .catch((error) => console.log(error));
-      console.log(Math.floor(new Date(timeLeft).getTime()/1000));
+      axios.post(serverUrl, {title: title, content: content, date: date })
+      .then((response) => {
+        props.onAddTask(0);
+      })
+      .catch((error) => console.log(error));
+      console.log(date);
     }
 
     
@@ -54,8 +51,8 @@ function TaskAdd(props) {
             <TextField label="Title" name="title" value={title} onChange={e => setTitle(e.target.value)} fullWidth/>
             <TextField label="Content" name="content" value={content} onChange={e => setContent(e.target.value)} fullWidth multiline rows="8" />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker fullWidth />
-              <TimePicker fullWidth value={timeLeft} onChange={setTimeLeft} />
+              <DatePicker fullWidth value={date} onChange={setDate} name="date" />
+              <TimePicker fullWidth value={date} onChange={setDate} name="date" />
 
             </MuiPickersUtilsProvider>
             {/* <TextField id="date" label="Date" type="date" defaultValue="2017-05-14" fullWidth className={classes.textField} />
@@ -64,7 +61,7 @@ function TaskAdd(props) {
             <Button variant="contained" color="secondary" type="submit" className={classes.button} startIcon={<AddIcon />}>
               Add
             </Button>
-            <Timer seconds={new Date(timeLeft).getTime()} />
+            <Timer seconds={40000} />
         </form>
 
     )
